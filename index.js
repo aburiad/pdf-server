@@ -1,14 +1,14 @@
-import express from 'express';
-import cors from 'cors';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 import dotenv from 'dotenv';
+import express from 'express';
 import pdfRoutes from './routes/pdfRoutes.js';
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5001;
-const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
+const FRONTEND_URL = process.env.FRONTEND_URL || 'https://qgen-mu.vercel.app';
 
 // Middleware
 app.use(cors({
@@ -57,7 +57,7 @@ app.use((req, res) => {
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`PDF Generator Server running on http://localhost:${PORT}`);
+  console.log(`PDF Generator Server running on port ${PORT}`);
   console.log(`CORS enabled for: ${FRONTEND_URL}`);
   console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
 });

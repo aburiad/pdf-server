@@ -1,15 +1,24 @@
-import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-core';
+
 const getPuppeteerConfig = () => {
-  return {
-    headless: true,
+  const executablePath = process.env.PUPPETEER_EXECUTABLE_PATH;
+  const args = (process.env.PUPPETEER_ARGS || '--no-sandbox,--disable-setuid-sandbox').split(',');
+  
+  const config = {
+    headless: process.env.PUPPETEER_HEADLESS === 'true',
     args: [
-      '--no-sandbox',
-      '--disable-setuid-sandbox',
+      ...args,
       '--disable-dev-shm-usage',
       '--disable-gpu',
-      '--single-process'
+      '--start-maximized'
     ]
   };
+  
+  if (executablePath && executablePath !== '') {
+    config.executablePath = executablePath;
+  }
+  
+  return config;
 };
 
 export const generatePDFFromHTML = async (htmlContent, pdfOptions = {}) => {
